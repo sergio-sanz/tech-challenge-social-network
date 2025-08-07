@@ -1,29 +1,41 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useAuth } from '@/hooks/use-auth'
 
 const formSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters long'),
+  username: z.string().min(1, 'Username is required'),
+  password: z.string().min(1, 'Password is required'),
 })
 
-export type LoginFormProps = React.HTMLAttributes<HTMLDivElement> & {}
+export type LoginFormProps = React.HTMLAttributes<HTMLDivElement> & {
+  onSuccess?: () => void
+}
 
-export function LoginForm({ ...props }: LoginFormProps) {
+export function LoginForm({ onSuccess, ...props }: LoginFormProps) {
+  const { login, isLoading } = useAuth()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   })
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log('Form submitted:', data)
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      await login(data)
+      onSuccess?.()
+    } catch (error) {
+      console.error('Login failed:', error)
+      toast.error('Login failed. Please try again.')
+    }
   }
 
   return (
@@ -35,16 +47,12 @@ export function LoginForm({ ...props }: LoginFormProps) {
         >
           <Form.Field
             control={form.control}
-            name="email"
+            name="username"
             render={({ field }) => (
               <Form.Item>
-                <Form.Label>Email</Form.Label>
+                <Form.Label>Username</Form.Label>
                 <Form.Control>
-                  <Input
-                    type="email"
-                    placeholder="you@example.com"
-                    {...field}
-                  />
+                  <Input type="text" placeholder="emilys" {...field} />
                 </Form.Control>
                 <Form.Message />
               </Form.Item>
@@ -63,7 +71,9 @@ export function LoginForm({ ...props }: LoginFormProps) {
               </Form.Item>
             )}
           />
-          <Button type="submit">Log in</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? 'Logging in...' : 'Log in'}
+          </Button>
         </form>
       </Form>
     </div>

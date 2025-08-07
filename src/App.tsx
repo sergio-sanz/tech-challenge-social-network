@@ -1,11 +1,16 @@
+import { Toaster } from '@/components/ui/sonner'
+import { AuthProvider } from '@/providers/auth'
 import { TanstackQueryProvider } from '@/providers/tanstack-query'
 import { AppRoutes } from '@/routes'
 
 function App() {
   return (
-    <TanstackQueryProvider>
-      <AppRoutes />
-    </TanstackQueryProvider>
+    <AuthProvider>
+      <TanstackQueryProvider>
+        <AppRoutes />
+        <Toaster />
+      </TanstackQueryProvider>
+    </AuthProvider>
   )
 }
 
