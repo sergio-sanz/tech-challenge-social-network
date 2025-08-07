@@ -1,12 +1,7 @@
-import { LoginForm } from '@/components/auth/login-form'
+import { AppRoutes } from '@/routes'
 
 function App() {
-  return (
-    <div className="flex flex-col gap-4 max-w-xl text-center mx-auto">
-      <h1 className="text-3xl font-bold underline">Social Network</h1>
-      <LoginForm />
-    </div>
-  )
+  return <AppRoutes />
 }
 
 export default App
