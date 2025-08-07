@@ -2,6 +2,7 @@ import 'react-responsive-pagination/themes/classic-light-dark.css'
 
 import { useState } from 'react'
 import ResponsivePagination from 'react-responsive-pagination'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Table } from '@/components/ui/table'
@@ -49,7 +50,9 @@ export function UsersTable({ className, ...props }: UsersTableProps) {
               </Table.Cell>
               <Table.Cell>{user.email}</Table.Cell>
               <Table.Cell>
-                <Button>Add friend</Button>
+                <Button onClick={() => toast.info('Coming soon...')}>
+                  Add friend
+                </Button>
               </Table.Cell>
             </Table.Row>
           ))}
