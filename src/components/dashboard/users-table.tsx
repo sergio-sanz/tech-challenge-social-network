@@ -14,7 +14,7 @@ export type UsersTableProps = React.HTMLAttributes<HTMLDivElement> & {}
 
 export function UsersTable({ className, ...props }: UsersTableProps) {
   const [page, setPage] = useState(1)
-  const { data, isLoading } = useUsers({ page })
+  const { data, isLoading, isFetching } = useUsers({ page })
   const totalPages = Math.ceil(
     (data?.total ?? 0) / (data?.limit ?? DEFAULT_PAGE_SIZE)
   )
@@ -25,7 +25,7 @@ export function UsersTable({ className, ...props }: UsersTableProps) {
 
   return (
     <div className={cn('flex flex-col gap-4', className)} {...props}>
-      <Table>
+      <Table className={cn(isFetching && 'opacity-50', 'transition-opacity')}>
         <Table.Header>
           <Table.Row>
             <Table.Head>Avatar</Table.Head>
