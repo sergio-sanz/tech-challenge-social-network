@@ -16,5 +16,5 @@ export async function getUsers({ page }: GetUsersParams) {
 
   const data = await response.json()
 
-  return data.users
+  return data
 }

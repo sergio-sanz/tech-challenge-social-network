@@ -1,18 +1,30 @@
+import 'react-responsive-pagination/themes/classic-light-dark.css'
+
+import { useState } from 'react'
+import ResponsivePagination from 'react-responsive-pagination'
+
 import { Button } from '@/components/ui/button'
 import { Table } from '@/components/ui/table'
 import { useUsers } from '@/hooks/use-users'
+import { cn } from '@/lib/utils'
+
+const DEFAULT_PAGE_SIZE = 5
 
 export type UsersTableProps = React.HTMLAttributes<HTMLDivElement> & {}
 
-export function UsersTable({ ...props }: UsersTableProps) {
-  const { data, isLoading } = useUsers({ page: 1 })
+export function UsersTable({ className, ...props }: UsersTableProps) {
+  const [page, setPage] = useState(1)
+  const { data, isLoading } = useUsers({ page })
+  const totalPages = Math.ceil(
+    (data?.total ?? 0) / (data?.limit ?? DEFAULT_PAGE_SIZE)
+  )
 
   if (isLoading) {
     return <div {...props}>Loading...</div>
   }
 
   return (
-    <div {...props}>
+    <div className={cn('flex flex-col gap-4', className)} {...props}>
       <Table>
         <Table.Header>
           <Table.Row>
@@ -23,7 +35,7 @@ export function UsersTable({ ...props }: UsersTableProps) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {data?.map((user) => (
+          {data?.users.map((user) => (
             <Table.Row key={user.id}>
               <Table.Cell>
                 <img
@@ -43,6 +55,11 @@ export function UsersTable({ ...props }: UsersTableProps) {
           ))}
         </Table.Body>
       </Table>
+      <ResponsivePagination
+        current={page}
+        total={totalPages}
+        onPageChange={setPage}
+      />
     </div>
   )
 }
