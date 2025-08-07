@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Button } from "./components/ui/button";
+import { useState } from 'react'
+import { Button } from './components/ui/button'
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
     <div className="flex flex-col gap-4 max-w-xl text-center mx-auto">
@@ -15,7 +15,7 @@ function App() {
         Count: {count}
       </Button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
