@@ -5,6 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { globalIgnores } from 'eslint/config'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 
 export default tseslint.config([
   globalIgnores(['dist']),
@@ -22,10 +23,20 @@ export default tseslint.config([
     },
     plugins: {
       'simple-import-sort': simpleImportSort,
+      '@tanstack/query': pluginQuery,
     },
     rules: {
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      '@tanstack/query/exhaustive-deps': 'error',
+      '@tanstack/query/no-rest-destructuring': 'error',
+      '@tanstack/query/stable-query-client': 'error',
+      '@tanstack/query/no-unstable-deps': 'error',
+      '@tanstack/query/infinite-query-property-order': 'error',
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
     },
   },
 ])
