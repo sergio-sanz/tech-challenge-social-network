@@ -29,7 +29,7 @@ export function UsersTable({ className, ...props }: UsersTableProps) {
         <Table.Header>
           <Table.Row>
             <Table.Head>Avatar</Table.Head>
-            <Table.Head>Nombre completo</Table.Head>
+            <Table.Head>Full name</Table.Head>
             <Table.Head>Email</Table.Head>
             <Table.Head></Table.Head>
           </Table.Row>
@@ -49,7 +49,7 @@ export function UsersTable({ className, ...props }: UsersTableProps) {
               </Table.Cell>
               <Table.Cell>{user.email}</Table.Cell>
               <Table.Cell>
-                <Button>Añadir amigo</Button>
+                <Button>Add friend</Button>
               </Table.Cell>
             </Table.Row>
           ))}
