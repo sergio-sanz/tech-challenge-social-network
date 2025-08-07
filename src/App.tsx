@@ -1,7 +1,12 @@
+import { TanstackQueryProvider } from '@/providers/tanstack-query'
 import { AppRoutes } from '@/routes'
 
 function App() {
-  return <AppRoutes />
+  return (
+    <TanstackQueryProvider>
+      <AppRoutes />
+    </TanstackQueryProvider>
+  )
 }
 
 export default App
